@@ -30,6 +30,7 @@ const welcome = async () => {
     
     ${chalk.bgRedBright("enter 'q' to quit")}
   `);
+  getInput();
 };
 
 const getInput = async () => {
@@ -46,10 +47,52 @@ const getInput = async () => {
     await sleep();
     await process.exit(1);
   } else {
-    console.log("you entered: " + userInput);
-    await process.exit(1);
+    handleEquation(userInput);
   }
 };
 
+function handleEquation(userInput) {
+  //splits up numbers in userInput into an array
+  let equation = userInput.split(" ");
+  let result = [];
+
+  //checks each character in the equation string and pushes the finished calculation into result
+  equation.map((element) => {
+    if (!isNaN(element)) {
+      result.push(element);
+    } else {
+      let num1 = result.pop();
+      let num2 = result.pop();
+
+      switch (element) {
+        case "+":
+          result.push(+num2 + +num1);
+          break;
+        case "-":
+          result.push(+num2 - +num1);
+          break;
+        case "*":
+          result.push(+num2 * +num1);
+          break;
+        case "/":
+          result.push(+num2 / +num1);
+          break;
+        case "^":
+          result.push(Math.pow(+num2, +num1));
+          break;
+      }
+    }
+  });
+
+  //checks for errors then loops back to getInput
+  if (result.length > 1) {
+    console.log(chalk.redBright("ERROR: Too many values in result."));
+  } else if (result.length < 1 || isNaN(result[0])) {
+    console.log(chalk.redBright("ERROR: Invalid input."));
+  } else {
+    console.log(result[0]);
+  }
+  getInput();
+}
+
 await welcome();
-await getInput();
