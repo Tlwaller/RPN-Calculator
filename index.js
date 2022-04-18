@@ -92,7 +92,7 @@ function handleEquation(userInput) {
       )
     );
   } else if (result.length < 1 || isNaN(result[0])) {
-    console.log(chalk.redBright(result[0] + "ERROR: Invalid input."));
+    console.log(chalk.redBright("ERROR: Invalid input."));
   } else {
     console.log(result[0]);
   }
