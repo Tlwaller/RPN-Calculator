@@ -86,9 +86,13 @@ function handleEquation(userInput) {
 
   //checks for errors then loops back to getInput
   if (result.length > 1) {
-    console.log(chalk.redBright("ERROR: Too many values in result."));
+    console.log(
+      chalk.redBright(
+        "ERROR: Disproportionate amount of values and operators in equation."
+      )
+    );
   } else if (result.length < 1 || isNaN(result[0])) {
-    console.log(chalk.redBright("ERROR: Invalid input."));
+    console.log(chalk.redBright(result[0] + "ERROR: Invalid input."));
   } else {
     console.log(result[0]);
   }
