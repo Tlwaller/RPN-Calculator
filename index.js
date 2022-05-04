@@ -53,7 +53,7 @@ const getInput = async () => {
 
 function handleEquation(userInput) {
   //splits up numbers in userInput into an array
-  let equation = userInput.split(" ");
+  let equation = userInput.trim().split(" ");
   let result = [];
 
   //checks each character in the equation string and pushes the finished calculation into result
@@ -80,6 +80,8 @@ function handleEquation(userInput) {
         case "^":
           result.push(Math.pow(+num2, +num1));
           break;
+        default:
+          result.splice(0, result.length, element);
       }
     }
   });
@@ -92,7 +94,9 @@ function handleEquation(userInput) {
       )
     );
   } else if (result.length < 1 || isNaN(result[0])) {
-    console.log(chalk.redBright("ERROR: Invalid input."));
+    console.log(
+      chalk.redBright("ERROR: Invalid character found in equation: " + result)
+    );
   } else {
     console.log(result[0]);
   }
